@@ -49,9 +49,7 @@ class SimplePanelFrame ( wx.Frame ):
         manager = None         
         try:
             manager = cmdr.Manager()
-            commands = cmdr.getAvailableCommands(appCommandsFolder)
-            for cmd in commands:
-                manager.addCommand(cmd)
+            manager.refresh()
         except:
             manager = None
             nsqrPy.printException()

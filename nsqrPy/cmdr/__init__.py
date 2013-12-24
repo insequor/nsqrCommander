@@ -18,6 +18,9 @@ class Manager (object):
     #-- Location for configuration files
     configFolder = ''
     
+    #
+    commandModules = {}
+    
     #--
     instance = None
     
@@ -117,8 +120,10 @@ class Manager (object):
         '''
         Destroy all command instances so they can be re-created next time
         '''
-        for cmdPair in self.__cmdList:
-            cmdPair[1] = None
+        self.__cmdList = []
+        commands = getAvailableCommands(Manager.configFolder)
+        for cmd in commands:
+            self.addCommand(cmd)
         
        
 #------------------------------------------------------------------------------
@@ -143,11 +148,29 @@ def getAvailableCommands(iPath):
             name, ext = os.path.splitext(name)
             if ext == '.py' and name != '__init__':
                 try:
-                    exec 'import ' + name
-                    exec 'commands.append(' + name + '.Command)'
+                    failed = False
+                    #We first check if the module was already loaded or not
+                    if Manager.commandModules.has_key(name):
+                        try:
+                            exec 'myModule = ' + 'Manager.commandModules["' + name + '"]'
+                            exec 'reload (myModule)'
+                        except: 
+                            failed = True
+                    else:
+                        try: 
+                            exec 'import ' + name
+                            exec 'myModule = ' + name
+                            exec 'Manager.commandModules["' + name + '"] = myModule'
+                        except: 
+                            failed = True
+                    if not failed:
+                        exec 'try: commands.append(myModule.Command)\nexcept: print  "No Command found in %s" % str(myModule)' 
                 except:
+                    failed = True
+                if failed:
+                    print 'Can not load the command module: ' + name
                     nsqrPy.printException()
-                    pass
+                 
     return commands
 
 #------------------------------------------------------------------------------
