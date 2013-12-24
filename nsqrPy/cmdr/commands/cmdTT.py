@@ -7,8 +7,10 @@ import nsqrPy
 import nsqrPy.cmdr as cmdr
 import nsqrPy.cmdrui as cmdrui
 
-import nsqrPy.tt as tt
-
+try:
+    import nsqrPy.tt as tt
+except: 
+    pass
 
 __doc__ = '''
     Command interface for TT (Team/Task Tracker module)
@@ -23,7 +25,7 @@ __doc__ = '''
 #=============================================================================
 #===
 #=============================================================================
-class Command:
+class Command_:
     author = 'Ozgur Aydin Yuksel'
     info = '''Client interface for nsqrPy.tt module: (Team/Task Tracker)'''
     
