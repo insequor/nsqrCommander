@@ -12,10 +12,6 @@ import nsqrPy
 import nsqrPy.wx 
 import nsqrPy.cmdr as cmdr
 
-from defaultapplication import DefaultApplication
-from msvisualstudio import MSVisualStudio
-from msword import MSWord
-
 import win32con 
 import win32gui
 

@@ -92,6 +92,9 @@ def setApplication(hwnd):
         print 'MSWord'
         from msword import MSWord
         application = MSWord(hwnd)
+    elif wndClass == 'rctrl_renwnd32':
+        from msoutlook import MSOutlook
+        application = MSOutlook(hwnd)
     else:
         print 'DefaultApplication'
         from defaultapplication import DefaultApplication
