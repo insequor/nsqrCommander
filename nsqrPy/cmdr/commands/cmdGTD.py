@@ -66,6 +66,22 @@ class Command:
                              'create task to waiting for list' : self.__createTaskToWaitingList}
         else:
             options = {}
+        
+        viewNames = ['Action List', 
+                      'Master List',
+                      'Incubation List',
+                      'Waiting for List',
+                      'Simple List']
+                      
+        for name in viewNames:
+            try: 
+                view = app.outlook.ActiveExplorer().CurrentFolder.Views.Item(name)
+                if view:
+                    options['Show ' + name] = self.__getShowTaskViewFunction(name)
+            except: 
+                nsqrPy.printException()
+                pass
+        
         self.__options = options
         
     #--
@@ -79,6 +95,14 @@ class Command:
             result = False
         return result
         
+    #---
+    def __getShowTaskViewFunction(self, name):
+        def showView():
+            app = cmdrui.application
+            view = app.outlook.ActiveExplorer().CurrentFolder.Views.Item(name)
+            view.Apply()
+        return showView
+    
     #---
     def __moveToActionList(self):
         task = cmdrui.application.getSelectedTask()
