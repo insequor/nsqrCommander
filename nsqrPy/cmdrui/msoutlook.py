@@ -24,11 +24,41 @@ class MSOutlook(DefaultApplication):
         '''
         If hwnd is None, current window will be retrieved
         '''
+        self.IsOutlook = True
+        
         print 'MSOutlook Application Detected'
         DefaultApplication.__init__(self, hwnd)
         
         self.outlook = com.client.Dispatch('Outlook.Application')
-        return 
+        
+    def __getSelectedItem(self):
+        if not self.outlook:
+            return
+        if self.outlook.ActiveExplorer().Selection.Count <= 0:
+            return
+            
+        item = self.outlook.ActiveExplorer().Selection.Item(1)
+        return item
+        
+    def getSelectedTask(self):
+        item = self.__getSelectedItem()
+        if item and item.Class == 48:
+            return item
+        
+    def getSelectedMail(self):
+        item = self.__getSelectedItem()
+        if item and item.Class == 43:
+            return item
+    def createTask(self):
+        
+        if not self.outlook:
+            return
+            
+        item = self.outlook.CreateItem(3)
+        item.Display()
+        return item
+        
+        
         
 #=============================================================================
 #===
