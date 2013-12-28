@@ -105,39 +105,35 @@ class Command:
     
     #---
     def __moveToActionList(self):
-        task = cmdrui.application.getSelectedTask()
-        
-        task.Status = TaskStatus.NotStarted
-        task.StartDate = datetime.datetime.now()
-        task.DueDate = task.StartDate
-        task.Save()
+        for task in cmdrui.application.getSelectedTasks():
+            task.Status = TaskStatus.NotStarted
+            task.StartDate = datetime.datetime.now()
+            task.DueDate = task.StartDate
+            task.Save()
         
     #---
     def __moveToMasterList(self):
-        task = cmdrui.application.getSelectedTask()
-        
-        task.Status = TaskStatus.NotStarted
-        task.StartDate = '2/2/3000'
-        task.DueDate = task.StartDate
-        task.Save()
+        for task in cmdrui.application.getSelectedTasks():
+            task.Status = TaskStatus.NotStarted
+            task.StartDate = '2/2/3000'
+            task.DueDate = task.StartDate
+            task.Save()
         
     #---
     def __moveToIncubationList(self):
-        task = cmdrui.application.getSelectedTask()
-        
-        task.Status = TaskStatus.Deferred
-        task.StartDate = '1/1/4501'
-        task.DueDate = task.StartDate
-        task.Save()
+        for task in cmdrui.application.getSelectedTasks():
+            task.Status = TaskStatus.Deferred
+            task.StartDate = '1/1/4501'
+            task.DueDate = task.StartDate
+            task.Save()
         
     #---
     def __moveToWaitingList(self):
-        task = cmdrui.application.getSelectedTask()
-        
-        task.Status = TaskStatus.WaitingFor
-        task.StartDate = '1/1/4501'
-        task.DueDate = task.StartDate
-        task.Save()
+        for task in cmdrui.application.getSelectedTasks():
+            task.Status = TaskStatus.WaitingFor
+            task.StartDate = '1/1/4501'
+            task.DueDate = task.StartDate
+            task.Save()
         
     #---
     def __createActionItem(self):

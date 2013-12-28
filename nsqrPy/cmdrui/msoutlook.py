@@ -44,6 +44,21 @@ class MSOutlook(DefaultApplication):
         item = self.__getSelectedItem()
         if item and item.Class == 48:
             return item
+            
+            
+    def getSelectedTasks(self):
+        if not self.outlook:
+            return
+        
+        #We are not using yield here and instead return the full array since
+        #if the caller modifies the objects, selection might change and our 
+        #iteration might be invalid
+        tasks = []
+        for i in range(self.outlook.ActiveExplorer().Selection.Count):
+            item = self.outlook.ActiveExplorer().Selection.Item(i + 1)
+            if item and item.Class == 48:
+                tasks.append(item)
+        return tasks
         
     def getSelectedMail(self):
         item = self.__getSelectedItem()
