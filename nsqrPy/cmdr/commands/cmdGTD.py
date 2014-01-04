@@ -49,8 +49,12 @@ class Command:
         
         app = cmdrui.application
         
-        try: outlookApp = app.IsOutlook
-        except: outlookApp = None
+        outlookApp = None
+        try: 
+            if app.IsOutlook: 
+                outlookApp = app
+        except: 
+            outlookApp = None
             
         options = {}
         if outlookApp:
@@ -73,7 +77,8 @@ class Command:
                           'Master List',
                           'Incubation List',
                           'Waiting for List',
-                          'Simple List']
+                          'To-Do List',
+                          'Completed']
                       
             for name in viewNames:
                 try: 
@@ -257,23 +262,23 @@ def createMantisTask(pr):
     return task
     
 def moveTaskToActionList(task):
-    task.Status = TaskStatus.NotStarted
+    if task.Status == TaskStatus.Deferred or task.Status == TaskStatus.WaitingFor:
+        task.Status = TaskStatus.NotStarted
     task.StartDate = datetime.datetime.now()
     task.DueDate = task.StartDate
     
 def moveTaskToMasterList(task):
-    task.Status = TaskStatus.NotStarted
-    task.StartDate = '2/2/3000'
+    if task.Status == TaskStatus.Deferred or task.Status == TaskStatus.WaitingFor:
+        task.Status = TaskStatus.NotStarted
+    task.StartDate = '1/1/4501'
     task.DueDate = task.StartDate
     
 def moveTaskToIncubationList(task):
     task.Status = TaskStatus.Deferred
-    task.StartDate = '1/1/4501'
     task.DueDate = task.StartDate
     
 def moveTaskToWaitingList(task):
     task.Status = TaskStatus.WaitingFor
-    task.StartDate = '1/1/4501'
     task.DueDate = task.StartDate
     
         
