@@ -193,7 +193,7 @@ class Command:
         To: %s 
         Sent On: %s 
         url:outlook:%s
-        ''' % (mail.Subject, mail.Sender, mail.To, mail.SentOn, mail.EntryID)
+        ''' % (mail.Subject, mail.SenderName, mail.To, mail.SentOn, mail.EntryID)
         return task
 
 #=============================================================================
