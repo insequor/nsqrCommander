@@ -54,6 +54,11 @@ class DefaultApplication(object):
     windows = property(__getWindows)
     
     #---
+    def __getWindowClass(self):
+        return gui.GetClassName(self.hwnd)
+    windowClass = property(__getWindowClass)
+        
+    #---
     def __init__(self, hwnd = None):
         '''
         If hwnd is None, current window will be retrieved

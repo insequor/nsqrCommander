@@ -96,7 +96,11 @@ def setApplication(hwnd):
         from msoutlook import MSOutlook
         application = MSOutlook(hwnd)
     else:
-        print 'DefaultApplication'
+        if 1:
+            print 'DefaultApplication'
+            print 'hwnd: ' + str(hwnd)
+            print 'wndClass: '  + wndClass
+            print 'wndText: ' + wndText
         from defaultapplication import DefaultApplication
         application = DefaultApplication(hwnd)
         
